@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-3">
+    <table class="table table-hover table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Title</th>
+                <th scope="col">Body</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in drafts %}
+                <tr>
+                    <td>{{ post.pub_date.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        <a href="{{ url_for('manage_entry', entry_id=post.id) }}">
+                            {{ post.title }}
+                        </a>
+                    </td>
+                    <td>{{ post.body|truncate(100, true) }}</td>
+                    <form action="{{ url_for('delete_entry', entry_id=post.id) }}" method="post">
+                        <td><button class="btn btn-danger" type="submit">Delete</button></td>
+                    </form>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
